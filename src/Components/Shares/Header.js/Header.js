@@ -12,6 +12,8 @@ const Header = () => {
             aria-label="Company"
             title="Company"
             class="inline-flex items-center"
+
+
           >
             <svg
               class="w-8 text-teal-accent-400"
@@ -75,7 +77,7 @@ const Header = () => {
             </li>
             <li>
              <Link
-                to="/"
+                to="/login"
                 class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
                 aria-label="Sign up"
                 title="Sign up"
