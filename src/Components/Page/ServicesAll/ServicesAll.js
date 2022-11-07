@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link, useLoaderData } from 'react-router-dom';
 
-const Services = () => {
-  const [service, setServices] = useState([]);
-  useEffect(() => {
-    fetch("http://localhost:5000/services")
-      .then((res) => res.json())
-      .then((data) => setServices(data));
-  }, []);
-  return (
-    <div>
-      <div className="grid gap-8 grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
-        {service.map((services) => (
-          <div key={services._id}>
-            <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+const ServicesAll = () => {
+    const user= useLoaderData()
+    return (
+        <div className='grid gap-8 grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full'>
+            {user.map(srv=><div key={srv._id}>
+                <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
               <div>
                 <div className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm">
                   <img
-                    src={services.img}
+                    src={srv.img}
                     className="object-cover"
                     alt=""
                   />
@@ -38,10 +31,10 @@ const Services = () => {
 
                       className="inline-block mb-3 text-2xl font-bold leading-5 transition-colors duration-200 hover:text-deep-purple-accent-700"
                     >
-                      {services.name}
+                      {srv.name}
                   </Link>
                     <p className="mb-2 text-gray-700">
-                      {services.description ? services.description.slice(0,100):services.description }...
+                      {srv.description ? srv.description.slice(0,100):srv.description }...
                     </p>
                     <Link
                       to='/'
@@ -54,20 +47,9 @@ const Services = () => {
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <div className="flex flex-end">
-        <div>
-            <button>
-                <Link to="/services">
-                    See More
-                </Link>
-            </button>
+            </div>)}
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
-export default Services;
+export default ServicesAll;
