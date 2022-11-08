@@ -7,7 +7,7 @@ import { auth, AuthContext } from "../../../Context/UseContext";
 import login from "../../../Images/38435-register.gif";
 
 const Register = () => {
-  const {createUser}= useContext(AuthContext)
+  const {createUser,updateprofile}= useContext(AuthContext)
   const githubProvider= new GithubAuthProvider()
   const googleProvider= new GoogleAuthProvider()
 
@@ -22,7 +22,14 @@ const Register = () => {
     .then((result)=>{
       const user= result.user;
       console.log(user)
-      toast.success('successfully')
+      toast.success('successfully Your Registation')
+      updateprofile(name)
+      .then(()=>{
+        toast.success('SuccessFully Your Name Updated')
+      })
+      .catch((error)=>{
+        console.error(error)
+      })
     })
     .catch(error=>{
       console.error(error)
@@ -109,7 +116,6 @@ const Register = () => {
         <div>
           <button onClick={signInGithub} className="flex items-center justify-center w-full p-4 my-5 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1  text-white  bg-black focus:ring-violet-400">
             <span className=" text-2xl">
-              {" "}
               <FaGithub></FaGithub>
             </span>
             <p>Login with GitHub</p>

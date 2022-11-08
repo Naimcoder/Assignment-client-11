@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import login from '../../../Images/38435-register.gif'
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { auth, AuthContext } from "../../../Context/UseContext";
-import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup } from "firebase/auth";
 const Login = () => {
+  const [userEmail,setUserEmail]=useState("")
   const{signIn}=useContext(AuthContext)
  const githubProvider= new GithubAuthProvider()
  const googleProvider= new GoogleAuthProvider()
@@ -49,6 +50,15 @@ const Login = () => {
       console.error(error)
     })
   }
+  const resetPassword=()=>{
+    sendPasswordResetEmail(auth,userEmail)
+    .then(()=>{
+      toast.success('please Cheak your Email?')
+    })
+    .catch(error=>{
+      console.error(error)
+    })
+  }
  
   return (
     <div className="flex py-20  justify-evenly">
@@ -66,10 +76,12 @@ const Login = () => {
               Email
             </label>
             <input
+            onChange={(e)=>setUserEmail(e.target.value)}
               type="email"
               name="email"
               placeholder="Enter Your Email"
               className="w-full px-4 text-lg py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+              required
             />
           </div>
           <div className="space-y-1 text-sm">
@@ -82,9 +94,10 @@ const Login = () => {
               id="password"
               placeholder="Password"
               className="w-full text-lg px-4 py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+              required
             />
-            <div className="flex justify-end text-lg dark:text-gray-400">
-              <Link to="">Forgot Password?</Link>
+            <div  className="flex justify-end text-lg dark:text-gray-400">
+              <button onClick={resetPassword}>Forgot Password?</button>
             </div>
           </div>
           <button className="block w-full p-3 text-center rounded-sm text-white bg-violet-400">
