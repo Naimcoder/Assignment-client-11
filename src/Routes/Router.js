@@ -1,3 +1,4 @@
+import Blog from "../Components/Page/Blog/Blog";
 import Home from "../Components/Page/Home/Home";
 import Login from "../Components/Page/Login/Login";
 import Register from "../Components/Page/Register/Register";
@@ -34,6 +35,9 @@ export const router = createBrowserRouter([
         path:'services/:id',
         element:<ServicesDetails></ServicesDetails>,
         loader:({params})=>fetch(`http://localhost:5000/services/${params.id}`)
+      },{
+        path:'/blog',
+        element:<Blog></Blog>
       }
     ]
   },

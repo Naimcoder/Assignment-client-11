@@ -1,44 +1,46 @@
-
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaBicycle, FaStar, FaUser } from "react-icons/fa";
 import { Link, useLoaderData } from "react-router-dom";
+import { AuthContext } from "../../../Context/UseContext";
 
 const ServicesDetails = () => {
-const [review ,setReview]=useState({})
-const [reviewData,setReviewData]=useState([])
-  const user = useLoaderData();
+  const [review, setReview] = useState({});
+  const [reviewData, setReviewData] = useState([]);
+  const { user } = useContext(AuthContext);
+  const users = useLoaderData();
   console.log(review);
-  const { name, img, price, ratings, delivery, description } = user;
-  const handleReview=(event)=>{
-   event.preventDefault()
-   console.log(review)
-   fetch('http://localhost:5000/reviews',{
-        method:"POST",
-        headers:{
-            "content-type":"application/json"
-        },
-        body: JSON.stringify(review)
-    }).then(res=>res.json())
-    .then(data=>{
-        console.log(data)
-        if (data.acknowledged) {
-            toast.success('your Review successfully')
-        }
+  const { name, img, price, ratings, delivery, description } = users;
+  const handleReview = (event) => {
+    event.preventDefault();
+    console.log(review);
+    fetch("http://localhost:5000/reviews", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(review),
     })
-  }
-  const handleblur=(event)=>{
-    const fuild= event.target.name;
-    const value= event.target.value;
-    const newUser= {...review}
-    newUser[fuild]=value;
-    setReview(newUser)
-  }
- useEffect(()=>{
- fetch('http://localhost:5000/reviews')
- .then(res=>res.json())
- .then(data=>setReviewData(data))
- },[])
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          toast.success("your Review successfully");
+        }
+      });
+  };
+  const handleblur = (event) => {
+    const fuild = event.target.name;
+    const value = event.target.value;
+    const newUser = { ...review };
+    newUser[fuild] = value;
+    setReview(newUser);
+  };
+  useEffect(() => {
+    fetch("http://localhost:5000/reviews")
+      .then((res) => res.json())
+      .then((data) => setReviewData(data));
+  }, []);
   return (
     <div>
       <div className="max-w-lg py-5 my-8 mx-auto p-4 shadow-md dark:bg-gray-900 dark:text-gray-100">
@@ -85,35 +87,27 @@ const [reviewData,setReviewData]=useState([])
             <p className="leading-snug dark:text-gray-400">{description}</p>
           </div>
 
-          <button className=" text-2xl font-bold text-orange-600">Price ${price}</button>
+          <button className=" text-2xl font-bold text-orange-600">
+            Price ${price}
+          </button>
         </div>
       </div>
       <div>
-
         {/* review part detalis */}
-        <div>
-            {reviewData.map(rv=><div className=" mx-auto px-3 py-5 border w-96" key={rv._id}>
-            <h2>Review :-{reviewData.length}</h2>
-            <div className="flex items-center">
-                <div><p className="h-10 w-10 rounded-full flex justify-center items-center bg-slate-300"><FaUser></FaUser></p></div>
-                <div className="mt-5 ml-3">
-                    <h2>{rv.name}</h2>
-                    <h3>{rv.email}</h3>
-                    <h4>{rv.message}</h4>
-                </div>
-            </div>
-            </div>)}
-        </div>
+
         {/* review part start */}
 
-        <form onSubmit={handleReview} className="  bg-slate-300 my-10 w-2/3 mx-auto p-10">
-            <h2 className="text-3xl py-5">Reviews</h2>
-        <div className="space-y-1 text-sm">
+        <form
+          onSubmit={handleReview}
+          className="  bg-slate-300 my-10 w-2/3 mx-auto p-10"
+        >
+          <h2 className="text-3xl py-5">Reviews</h2>
+          <div className="space-y-1 text-sm">
             <label for="name" className="block text-xl dark:text-gray-400">
-            Your Name*
+              Your Name*
             </label>
             <input
-            onBlur={handleblur}
+              onBlur={handleblur}
               type="text"
               name="name"
               placeholder="Your Name"
@@ -121,12 +115,12 @@ const [reviewData,setReviewData]=useState([])
               required
             />
           </div>
-        <div className="space-y-1 text-sm my-3">
+          <div className="space-y-1 text-sm my-3">
             <label for="email" className="block text-xl dark:text-gray-400">
-            Your Email *
+              Your Email *
             </label>
             <input
-            onBlur={handleblur}
+              onBlur={handleblur}
               type="email"
               name="email"
               placeholder="Enter Your Email"
@@ -135,26 +129,84 @@ const [reviewData,setReviewData]=useState([])
             />
           </div>
 
-        <div className="space-y-1 text-sm">
-            <label for="rating" className="flex text-xl py-5 dark:text-gray-400">
-            Your rating * 
-            <span className="flex ml-3 text-2xl group-aria-selected:text-yellow-600">
-                <Link className="start-1"><FaStar></FaStar></Link>
-                <Link className="start-2"><FaStar></FaStar></Link>
-                <Link className="start-3"><FaStar></FaStar></Link>
-                <Link className="start-4"><FaStar></FaStar></Link>
-                <Link className="start-5"><FaStar></FaStar></Link>
-            </span>
+          <div className="space-y-1 text-sm">
+            <label
+              for="rating"
+              className="flex text-xl py-5 dark:text-gray-400"
+            >
+              Your rating *
+              <span className="flex ml-3 text-2xl group-aria-selected:text-yellow-600">
+                <Link className="start-1">
+                  <FaStar></FaStar>
+                </Link>
+                <Link className="start-2">
+                  <FaStar></FaStar>
+                </Link>
+                <Link className="start-3">
+                  <FaStar></FaStar>
+                </Link>
+                <Link className="start-4">
+                  <FaStar></FaStar>
+                </Link>
+                <Link className="start-5">
+                  <FaStar></FaStar>
+                </Link>
+              </span>
             </label>
           </div>
-        <div className="space-y-1 text-sm">
+          <div className="space-y-1 text-sm">
             <label for="email" className="block text-xl dark:text-gray-400">
-            Your review *
+              Your review *
             </label>
-            <textarea onBlur={handleblur} name="message" placeholder="" className="w-full p-3 h-32"></textarea>
+            <textarea
+              onBlur={handleblur}
+              name="message"
+              placeholder=""
+              className="w-full p-3 h-32"
+            ></textarea>
           </div>
-        <button className="bg-orange-600 text-xl text-white py-3 px-5 my-5 rounded" type="submit">Submit</button>
+          <button
+            className="bg-orange-600 text-xl text-white py-3 px-5 my-5 rounded"
+            type="submit"
+          >
+            Submit
+          </button>
         </form>
+      </div>
+      <div>
+        <div>
+          {reviewData.map((rv) => (
+            <div
+              className=" shadow-xl my-4 mx-auto px-3 py-5 border w-6/12 rounded"
+              key={rv._id}
+            >
+              <div className="flex items-center">
+                <div>
+                  {user?.email ? (
+                    <>
+                      <img
+                        className="rounded-full w-16"
+                        src={user?.photoURL}
+                        alt=""
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <span>
+                        <FaUser></FaUser>
+                      </span>
+                    </>
+                  )}
+                </div>
+                <div className="mt-5 ml-3">
+                  <h2>{rv.name}</h2>
+                  <h3>{rv.email}</h3>
+                  <h4>{rv.message}</h4>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

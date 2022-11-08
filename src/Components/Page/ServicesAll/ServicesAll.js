@@ -6,7 +6,7 @@ const ServicesAll = () => {
     return (
         <div className=''>
           <h1 className='text-center text-5xl py-8 text-amber-400'>MY SERVICRS</h1>
-          <div className='grid gap-8 grid-cols-3 sm:max-w-sm sm:mx-auto  shadow-xl lg:max-w-full'>
+          <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3 sm:max-w-sm sm:mx-auto  shadow-xl lg:max-w-full'>
             {user.map(srv=><div key={srv._id}>
                 <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
               <div>
