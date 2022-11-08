@@ -1,66 +1,114 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../../../Images/logo.svg'
+import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
+import { FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Context/UseContext";
+import logo from "../../../Images/logo.svg";
 const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    return (
-      <div class="bg-white">
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user,logOut } = useContext(AuthContext);
+
+  const handleLogout=()=>{
+    logOut()
+    .then(() => {
+      toast.success('Sign-out successful')
+    }).catch((error) => {
+      console.error(error)
+    });
+  }
+  return (
+    <div class="bg-white">
       <div class="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full  shadow-lg md:px-24 lg:px-8">
         <div class="relative flex items-center justify-between">
-          <Link
-           to="/"
-            title="FoodFly"
-            class="inline-flex items-center"
-          >
-           <img src={logo} alt="" />
-         </Link>
+          <Link to="/" title="FoodFly" class="inline-flex items-center">
+            <img src={logo} alt="" />
+          </Link>
           <ul class="flex items-center hidden space-x-8 lg:flex">
             <li>
               <Link
-               to="/home"
+                to="/home"
                 class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
               >
                 Home
-             </Link>
+              </Link>
             </li>
             <li>
               <Link
-               to="/blog"
-
+                to="/blog"
                 class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
               >
                 Blog
-             </Link>
+              </Link>
             </li>
-            <li>
-              <Link
-               to="/reviews"
-                class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
-              >
-                My Reviews
-             </Link>
-            </li>
-            <li>
-              <Link
-               to="/services"
-                aria-label="About us"
-                title="About us"
-                class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400">
-                My Services
-             </Link>
-            </li>
+            {user?.email ? (
+              <>
+                <li>
+                  <Link
+                    to="/reviews"
+                    class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
+                  >
+                    My Reviews
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/services"
+                    aria-label="About us"
+                    title="About us"
+                    class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
+                  >
+                    My Services
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
           </ul>
           <ul class="flex items-center hidden space-x-8 lg:flex">
-            <li>
-              <Link
-               to="/Login"
-                class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-500 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                aria-label="Sign up"
-                title="Sign up"
-              >
-                Sign In
-             </Link>
-            </li>
+            {user?.uid ? (
+              <>
+                <li>
+                  <Link
+                  onClick={handleLogout}
+                    class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-500 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                    aria-label="Sign up"
+                    title="Sign up"
+                  >
+                    LogOut
+                  </Link>
+                </li>
+                <li className=" text-lg font-medium">{user?.displayName}</li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link
+                    to="/Login"
+                    class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-500 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                    aria-label="Sign up"
+                    title="Sign up"
+                  >
+                    Sign In
+                  </Link>
+                </li>
+              </>
+            )}
+            {user?.email ? (
+              <>
+                <img
+                  className=" rounded-full  w-16"
+                  src={user?.photoURL}
+                  alt=""
+                />
+              </>
+            ) : (
+              <>
+                <span>
+                  <FaUser></FaUser>
+                </span>
+              </>
+            )}
           </ul>
           <div class="lg:hidden">
             <button
@@ -90,7 +138,7 @@ const Header = () => {
                   <div class="flex items-center justify-between mb-4">
                     <div>
                       <Link
-                       to="/"
+                        to="/"
                         aria-label="Company"
                         title="Company"
                         class="inline-flex items-center"
@@ -113,7 +161,7 @@ const Header = () => {
                         <span class="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
                           Company
                         </span>
-                     </Link>
+                      </Link>
                     </div>
                     <div>
                       <button
@@ -135,53 +183,53 @@ const Header = () => {
                     <ul class="space-y-4">
                       <li>
                         <Link
-                         to="/home"
+                          to="/home"
                           aria-label="Our product"
                           title="Our product"
                           class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                         >
                           Home
-                       </Link>
+                        </Link>
                       </li>
                       <li>
                         <Link
-                         to="/blog"
+                          to="/blog"
                           aria-label="Our product"
                           title="Our product"
                           class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                         >
                           Blog
-                       </Link>
+                        </Link>
                       </li>
                       <li>
                         <Link
-                         to="/reviews"
+                          to="/reviews"
                           aria-label="Product pricing"
                           title="Product pricing"
                           class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                         >
                           My Reviews
-                       </Link>
+                        </Link>
                       </li>
                       <li>
                         <Link
-                         to="/services"
+                          to="/services"
                           aria-label="About us"
                           title="About us"
                           class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                         >
-                       My services
-                       </Link>
+                          My services
+                        </Link>
                       </li>
                       <li>
                         <Link
-                         to="/login"
+                          to="/login"
                           class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
                           aria-label="Sign In"
                           title="Sign In"
                         >
                           Sign In
-                       </Link>
+                        </Link>
                       </li>
                     </ul>
                   </nav>
@@ -192,7 +240,7 @@ const Header = () => {
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default Header;

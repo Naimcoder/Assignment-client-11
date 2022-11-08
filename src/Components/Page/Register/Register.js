@@ -1,21 +1,56 @@
-import React, { useState } from "react";
+import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { auth, AuthContext } from "../../../Context/UseContext";
 import login from "../../../Images/38435-register.gif";
 
 const Register = () => {
-  const [user, setUser] = useState({});
+  const {createUser}= useContext(AuthContext)
+  const githubProvider= new GithubAuthProvider()
+  const googleProvider= new GoogleAuthProvider()
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(user);
+    const from = event.target;
+    const name=from.name.value
+    const email = from.email.value;
+    const password = from.password.value;
+    console.log(name,email,password)
+    createUser(email,password)
+    .then((result)=>{
+      const user= result.user;
+      console.log(user)
+      toast.success('successfully')
+    })
+    .catch(error=>{
+      console.error(error)
+    })
+  
   };
-  const handleBlur = (event) => {
-    const value = event.target.value;
-    const fuild = event.target.name;
-    const newUser = { ...user };
-    newUser[fuild] = value;
-    setUser(newUser);
-  };
+  const signInGoogle=()=>{
+    signInWithPopup(auth,googleProvider)
+    .then((result)=>{
+      const user= result.user;
+      console.log(user)
+      toast.success('successfully Your Google SignIn')
+    }).catch(error=>{
+      console.error(error)
+    })
+  }
+  const signInGithub=()=>{
+    signInWithPopup(auth,githubProvider)
+    .then((result)=>{
+      const user= result.user;
+      console.log(user)
+      toast.success('successfully Your Github SignIn')
+    }).catch(error=>{
+      console.error(error)
+    })
+  }
+
+
   return (
     <div className="flex py-20  justify-evenly">
       <div className="w-1/2">
@@ -32,7 +67,6 @@ const Register = () => {
               Name
             </label>
             <input
-              onBlur={handleBlur}
               type="text"
               name="name"
               placeholder="Your Name"
@@ -44,7 +78,6 @@ const Register = () => {
               Email
             </label>
             <input
-              onBlur={handleBlur}
               type="email"
               name="email"
               placeholder="Enter Your Email"
@@ -56,7 +89,6 @@ const Register = () => {
               Password
             </label>
             <input
-              onBlur={handleBlur}
               type="password"
               name="password"
               id="password"
@@ -75,14 +107,14 @@ const Register = () => {
           </p>
         </div>
         <div>
-          <button className="flex items-center justify-center w-full p-4 my-5 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1  text-white  bg-black focus:ring-violet-400">
+          <button onClick={signInGithub} className="flex items-center justify-center w-full p-4 my-5 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1  text-white  bg-black focus:ring-violet-400">
             <span className=" text-2xl">
               {" "}
               <FaGithub></FaGithub>
             </span>
             <p>Login with GitHub</p>
           </button>
-          <button className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1  text-white   bg-blue-600 focus:ring-violet-400">
+          <button onClick={signInGoogle} className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1  text-white   bg-blue-600 focus:ring-violet-400">
             <span className=" text-2xl">
               <FaGoogle></FaGoogle>
             </span>

@@ -1,32 +1,55 @@
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
 import login from '../../../Images/38435-register.gif'
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { useContext } from "react";
+import { auth, AuthContext } from "../../../Context/UseContext";
+import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 const Login = () => {
-  const [user, setUser] = useState({});
-
+  const{signIn}=useContext(AuthContext)
+ const githubProvider= new GithubAuthProvider()
+ const googleProvider= new GoogleAuthProvider()
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(user);
-    fetch("", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(user),
+    const from = event.target;
+    const email = from.email.value;
+    const password = from.password.value;
+    console.log(email,password)
+    signIn(email,password)
+    .then((result) => {
+      const user = result.user;
+      console.log(user)
+      toast.success('successfully')
+      // ...
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    .catch((error) => {
+       console.log(error)
+    })
   };
-  const handlechange = (event) => {
-    const value = event.target.value;
-    const fuild = event.target.name;
-    const newUser = { ...user };
-    newUser[fuild] = value;
-    setUser(newUser);
-  };
+
+  const signInGoogle=()=>{
+    signInWithPopup(auth,googleProvider)
+    .then((result)=>{
+      const user= result.user;
+      console.log(user)
+      toast.success('successfully Your Google SignIn')
+    }).catch(error=>{
+      console.error(error)
+    })
+  }
+  const signInGithub=()=>{
+    signInWithPopup(auth,githubProvider)
+    .then((result)=>{
+      const user= result.user;
+      console.log(user)
+      toast.success('successfully Your Github SignIn')
+    }).catch(error=>{
+      console.error(error)
+    })
+  }
+ 
   return (
     <div className="flex py-20  justify-evenly">
     <div className="w-1/2">
@@ -43,10 +66,9 @@ const Login = () => {
               Email
             </label>
             <input
-            onBlur={handlechange}
               type="email"
               name="email"
-              placeholder="Username"
+              placeholder="Enter Your Email"
               className="w-full px-4 text-lg py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
             />
           </div>
@@ -55,7 +77,6 @@ const Login = () => {
               Password
             </label>
             <input
-            onBlur={handlechange}
               type="password"
               name="password"
               id="password"
@@ -77,11 +98,11 @@ const Login = () => {
           </p>
         </div>
         <div>
-    <button  className="flex items-center justify-center w-full p-4 my-5 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1  text-white  bg-black focus:ring-violet-400">
+    <button onClick={signInGithub} className="flex items-center justify-center w-full p-4 my-5 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1  text-white  bg-black focus:ring-violet-400">
 			 <span className=" text-2xl"> <FaGithub></FaGithub></span>
 			<p>Login with GitHub</p>
 		</button>
-    <button  className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1  text-white   bg-blue-600 focus:ring-violet-400">
+    <button onClick={signInGoogle}  className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1  text-white   bg-blue-600 focus:ring-violet-400">
 			 <span className=" text-2xl"><FaGoogle></FaGoogle></span>
 			<p>Login with Google</p>
 		</button>
