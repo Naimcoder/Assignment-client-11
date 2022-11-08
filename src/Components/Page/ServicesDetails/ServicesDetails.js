@@ -11,36 +11,59 @@ const ServicesDetails = () => {
   const users = useLoaderData();
   console.log(review);
   const { name, img, price, ratings, delivery, description } = users;
+
+
+
   const handleReview = (event) => {
     event.preventDefault();
-    console.log(review);
+    
+  const servicesId=users?._id;
+  const servicesName= users?.name;
+  const userEmail= event.target.email.value
+  const userName= event.target.name.value;
+  const review=event.target.message.value;
+
     fetch("http://localhost:5000/reviews", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(review),
+      body: JSON.stringify({
+        servicesId,
+        servicesName,
+        userName,
+        userEmail,
+        review,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.acknowledged) {
-          toast.success("your Review successfully");
-        }
       });
   };
-  const handleblur = (event) => {
-    const fuild = event.target.name;
-    const value = event.target.value;
-    const newUser = { ...review };
-    newUser[fuild] = value;
-    setReview(newUser);
-  };
+
+
+  
+  // const handleblur = (event) => {
+  //   const fuild = event.target.name;
+  //   const value = event.target.value;
+  //   const newUser = { ...review};
+  //   newUser[fuild] = value;
+  //   setReview(newUser);
+  // };
+
+
   useEffect(() => {
-    fetch("http://localhost:5000/reviews")
+    fetch(`http://localhost:5000/reviews`)
       .then((res) => res.json())
-      .then((data) => setReviewData(data));
-  }, []);
+      .then((data) => {
+        const agreeData=data.filter(dt=>{
+         return dt.servicesId === users._id;
+        })
+        setReviewData(agreeData)
+      });
+  }, [users._id]);
+console.log(reviewData)
   return (
     <div>
       <div className="max-w-lg py-5 my-8 mx-auto p-4 shadow-md dark:bg-gray-900 dark:text-gray-100">
@@ -94,7 +117,40 @@ const ServicesDetails = () => {
       </div>
       <div>
         {/* review part detalis */}
-
+        <div>
+          {reviewData.map((rv) => (
+            <div
+              className=" shadow-xl my-4 mx-auto px-3 py-5 border lg:w-6/12 rounded"
+              key={rv._id}
+            >
+              <div className="flex items-center">
+                <div>
+                  {user?.email ? (
+                    <>
+                      <img
+                        className="rounded-full w-16"
+                        src={user?.photoURL}
+                        alt=""
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <span>
+                        <FaUser></FaUser>
+                      </span>
+                    </>
+                  )}
+                </div>
+                <div className="mt-5 ml-3">
+                  <h2>{rv.userName}</h2>
+                  <h3>{rv.userEmail}</h3>
+                  <h4>{rv.servicesName}</h4>
+                  <h3>{rv.review}</h3>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
         {/* review part start */}
 
         <form
@@ -107,12 +163,12 @@ const ServicesDetails = () => {
               Your Name*
             </label>
             <input
-              onBlur={handleblur}
+              // onBlur={handleblur}
               type="text"
               name="name"
               placeholder="Your Name"
               className="w-full px-4 text-lg py-3 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
-              required
+              // required
             />
           </div>
           <div className="space-y-1 text-sm my-3">
@@ -120,12 +176,12 @@ const ServicesDetails = () => {
               Your Email *
             </label>
             <input
-              onBlur={handleblur}
+              // onBlur={handleblur}
               type="email"
               name="email"
               placeholder="Enter Your Email"
               className="w-full px-4 text-lg py-3 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
-              required
+              // required
             />
           </div>
 
@@ -159,7 +215,7 @@ const ServicesDetails = () => {
               Your review *
             </label>
             <textarea
-              onBlur={handleblur}
+              // onBlur={handleblur}
               name="message"
               placeholder=""
               className="w-full p-3 h-32"
@@ -174,39 +230,6 @@ const ServicesDetails = () => {
         </form>
       </div>
       <div>
-        <div>
-          {reviewData.map((rv) => (
-            <div
-              className=" shadow-xl my-4 mx-auto px-3 py-5 border lg:w-6/12 rounded"
-              key={rv._id}
-            >
-              <div className="flex items-center">
-                <div>
-                  {user?.email ? (
-                    <>
-                      <img
-                        className="rounded-full w-16"
-                        src={user?.photoURL}
-                        alt=""
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <span>
-                        <FaUser></FaUser>
-                      </span>
-                    </>
-                  )}
-                </div>
-                <div className="mt-5 ml-3">
-                  <h2>{rv.name}</h2>
-                  <h3>{rv.email}</h3>
-                  <h4>{rv.message}</h4>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
