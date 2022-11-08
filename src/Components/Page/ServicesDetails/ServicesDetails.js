@@ -99,7 +99,7 @@ const ServicesDetails = () => {
 
         <form
           onSubmit={handleReview}
-          className="  bg-slate-300 my-10 w-2/3 mx-auto p-10"
+          className="  bg-slate-300 my-10 lg:w-2/3 mx-auto p-10"
         >
           <h2 className="text-3xl py-5">Reviews</h2>
           <div className="space-y-1 text-sm">
@@ -177,7 +177,7 @@ const ServicesDetails = () => {
         <div>
           {reviewData.map((rv) => (
             <div
-              className=" shadow-xl my-4 mx-auto px-3 py-5 border w-6/12 rounded"
+              className=" shadow-xl my-4 mx-auto px-3 py-5 border lg:w-6/12 rounded"
               key={rv._id}
             >
               <div className="flex items-center">

@@ -10,10 +10,10 @@ const Services = () => {
   }, []);
   return (
     <div>
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3  sm:mx-auto l px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl  lg:px-8 lg:py-20">
         {service.map((services) => (
           <div key={services._id}>
-            <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl  lg:px-8 lg:py-20">
+            <div className="">
               <div>
                 <div className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-lg">
                   <img src={services.img} className="object-cover" alt="" />
