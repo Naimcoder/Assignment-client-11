@@ -27,12 +27,13 @@ const ServicesAll = () => {
                     <p className="mb-2 text-gray-700">
                       {srv.description ? srv.description.slice(0,100):srv.description }...
                     </p>
+                    <p className='text-2xl font-semibold text-orange-500'>${srv.price}</p>
                     <Link
-                      to='/'
+                      to={`/services/${srv._id}`}
                       aria-label=""
-                      className="inline-flex items-center font-semibold transition-colors duration-200  text-blue-700 hover:text-deep-purple-800"
+                      className="inline-flex items-center font-semibold transition-colors duration-200 text-white py-3 px-5 bg-orange-500 my-5 rounded hover:text-deep-purple-800"
                     >
-                      Learn more
+                     Buy Now
                   </Link>
                   </div>
                 </div>
