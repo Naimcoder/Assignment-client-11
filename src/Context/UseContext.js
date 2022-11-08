@@ -1,8 +1,10 @@
 import React, { createContext, useState } from 'react';
 
 export const AuthContext= createContext()
+
 const UseContext = ({children}) => {
-    const [user,setuser]=useState({})
+
+    const [user,setuser]=useState(null)
     const [loader,setLoader]=useState(true)
 
 

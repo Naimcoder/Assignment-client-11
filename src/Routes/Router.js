@@ -1,4 +1,5 @@
 import Home from "../Components/Page/Home/Home";
+import Login from "../Components/Page/Login/Login";
 import ServicesAll from "../Components/Page/ServicesAll/ServicesAll";
 import Root from "../Layout/Root";
 
@@ -19,7 +20,10 @@ export const router = createBrowserRouter([
         path:'/services',
         element:<ServicesAll></ServicesAll>,
         loader:()=>fetch('http://localhost:5000/servicesAll')
-
+      },
+      {
+        path:'/login',
+        element:<Login></Login>
       }
     ]
   },

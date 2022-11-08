@@ -57,11 +57,11 @@ const Services = () => {
           </div>
         ))}
       </div>
-      <div className="flex flex-end">
+      <div className="text-center pb-4">
         <div>
             <button>
                 <Link to="/services">
-                    See More
+                  <button  className="btn text-lg text-gray-50 px-5 py-2 bg-blue-700">See More</button>
                 </Link>
             </button>
         </div>
