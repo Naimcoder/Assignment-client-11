@@ -24,7 +24,7 @@ const AddService = () => {
             headers:{
                 "content-type":"application/json",
             },
-            bodoy: JSON.stringify({
+            body: JSON.stringify({
             name,
             img,
             price,
@@ -117,5 +117,5 @@ const AddService = () => {
     </div>
   );
 };
-// description,name, img, price, ratings, delivery, description
+
 export default AddService;

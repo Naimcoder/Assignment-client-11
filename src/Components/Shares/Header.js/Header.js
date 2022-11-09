@@ -53,18 +53,24 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
-                    to="/services"
-                    aria-label="About us"
-                    title="About us"
+                    to="/addservice"
                     class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
                   >
-                    My Services
+                     Add Services
                   </Link>
                 </li>
               </>
             ) : (
               <></>
             )}
+            <li>
+                  <Link
+                    to="/services"
+                    class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
+                  >
+                   My Services
+                  </Link>
+                </li>
           </ul>
           <ul class="flex items-center hidden space-x-8 lg:flex">
             {user?.uid ? (
@@ -199,12 +205,12 @@ const Header = () => {
                           </li>
                           <li>
                             <Link
-                              to="/services"
+                              to="/addservice"
                               aria-label="About us"
                               title="About us"
                               class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
                             >
-                              My Services
+                            Add Services
                             </Link>
                           </li>
                         </>
@@ -239,6 +245,16 @@ const Header = () => {
                           </li>
                         </>
                       )}
+                       <li>
+                            <Link
+                              to="/services"
+                              aria-label="About us"
+                              title="About us"
+                              class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
+                            >
+                            My Services
+                            </Link>
+                          </li>
                       {user?.email ? (
                         <>
                           <img
