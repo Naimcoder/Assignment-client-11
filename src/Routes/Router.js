@@ -6,6 +6,7 @@ import MyReview from "../Components/Page/MyReview/MyReview";
 import Register from "../Components/Page/Register/Register";
 import ServicesAll from "../Components/Page/ServicesAll/ServicesAll";
 import ServicesDetails from "../Components/Page/ServicesDetails/ServicesDetails";
+import PrivateRouter from "./PrivateRouter";
 import Root from "../Layout/Root";
 
 const { createBrowserRouter } = require("react-router-dom");
@@ -35,7 +36,7 @@ export const router = createBrowserRouter([
         element:<Register></Register>
       },{
         path:'services/:id',
-        element:<ServicesDetails></ServicesDetails>,
+        element:<PrivateRouter><ServicesDetails></ServicesDetails></PrivateRouter>,
         loader:({params})=>fetch(`http://localhost:5000/services/${params.id}`)
       },{
         path:'/blog',
@@ -43,11 +44,11 @@ export const router = createBrowserRouter([
       },
       {
         path:'/addservice',
-        element:<AddService></AddService>
+        element:<PrivateRouter><AddService></AddService></PrivateRouter>
       },
       {
         path:'/reviews',
-        element:<MyReview></MyReview>
+        element:<PrivateRouter><MyReview></MyReview></PrivateRouter>
       }
     ]
   },

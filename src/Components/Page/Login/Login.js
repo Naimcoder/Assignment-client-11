@@ -30,43 +30,16 @@ const froms= loaction.state?.from?.pathname || '/';
     const email = from.email.value;
     const password = from.password.value;
     console.log(email, password);
-
     signIn(email, password)
       .then((result) => {
         const user = result.user;
-        const currentUsers={
-         email:user.email
-        }
-        console.log(currentUsers)
-
         console.log(user);
-        // toast.success("successfully");
-        fetch('http://localhost:5000/jwt',{
-          method:"POST",
-          headers:{
-            "content-type":"application/json",
-          },
-          body: JSON.stringify(currentUsers)
-        })
-        .then(res=>res.json())
-        .then(data=>{
-          console.log(data)
-          localStorage.setItem('reviewToken',data.token)
-          from.reset()
-          navigate(froms,{replace:true})
-        })
-        // 
-      //  
+        from.reset()
+        navigate(froms,{replace:true})
       })
-
-
       .catch((error) => {
         console.log(error);
       });
-
-
-
-
   };
 
   const signInGoogle = () => {

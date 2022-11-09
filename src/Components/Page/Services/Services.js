@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import 'react-photo-view/dist/react-photo-view.css';
 import { Link } from "react-router-dom";
 
 const Services = () => {
@@ -16,7 +18,11 @@ const Services = () => {
             <div className="">
               <div>
                 <div className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-lg">
-                  <img src={services.img} className="object-cover" alt="" />
+                <PhotoProvider>
+                    <PhotoView src={services.img}>
+                    <img src={services.img} className="object-cover" alt="" />
+                    </PhotoView>
+                  </PhotoProvider>
                   <div className="p-5 border border-t-0">
                     <p className="mb-3 text-xs font-semibold tracking-wide uppercase">
                       <Link

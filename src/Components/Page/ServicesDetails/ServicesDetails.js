@@ -1,6 +1,8 @@
+import { fromJSON } from "postcss";
 import React, { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { FaBicycle, FaStar, FaUser } from "react-icons/fa";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../../Context/UseContext";
 
@@ -9,17 +11,21 @@ const ServicesDetails = () => {
   const { user } = useContext(AuthContext);
   const users = useLoaderData();
   const { name, img, price, ratings, delivery, description } = users;
+  const time = new Date().toDateString();
 
 
 
+  
   const handleReview = (event) => {
     event.preventDefault();
-    
-  const servicesId=users?._id;
-  const servicesName= users?.name;
-  const userEmail= event.target.email.value
-  const userName= event.target.name.value;
-  const review=event.target.message.value;
+
+    const servicesId = users?._id;
+    const servicesName = users?.name;
+    const userEmail = event.target.email.value;
+    const userName = event.target.name.value;
+    const review = event.target.message.value;
+
+
 
     fetch("http://localhost:5000/reviews", {
       method: "POST",
@@ -32,6 +38,7 @@ const ServicesDetails = () => {
         userName,
         userEmail,
         review,
+        time: time,
       }),
     })
       .then((res) => res.json())
@@ -41,38 +48,36 @@ const ServicesDetails = () => {
   };
 
 
-  
-  // const handleblur = (event) => {
-  //   const fuild = event.target.name;
-  //   const value = event.target.value;
-  //   const newUser = { ...review};
-  //   newUser[fuild] = value;
-  //   setReview(newUser);
-  // };
-
 
   useEffect(() => {
     fetch(`http://localhost:5000/reviews`)
       .then((res) => res.json())
       .then((data) => {
-        const agreeData=data.filter(dt=>{
-         return dt.servicesId === users._id;
-        })
-        setReviewData(agreeData)
+        console.log(data);
+        const agreeData = data.filter((dt) => {
+          return dt.servicesId === users._id;
+        });
+        setReviewData(agreeData);
       });
-  }, [users._id]);
-console.log(reviewData)
+  }, [users._id,reviewData]);
+ 
+
   return (
     <div>
+      {/* single service part detalis start */}
       <div className="max-w-lg py-5 my-8 mx-auto p-4 shadow-md dark:bg-gray-900 dark:text-gray-100">
         <div className="flex justify-between pb-4 border-bottom"></div>
         <div className="space-y-4">
           <div className="space-y-2">
-            <img
-              src={img}
-              alt=""
-              className="block object-cover object-center mx-auto rounded-md h-72 dark:bg-gray-500"
-            />
+            <PhotoProvider>
+              <PhotoView src={img}>
+                <img
+                  src={img}
+                  alt=""
+                  className="block object-cover object-center mx-auto rounded-md h-72 dark:bg-gray-500"
+                />
+              </PhotoView>
+            </PhotoProvider>
             <div className="flex items-center text-lg">
               <span className=" flex items-center text-orange-600">
                 Delivery {delivery}
@@ -113,12 +118,13 @@ console.log(reviewData)
           </button>
         </div>
       </div>
+       {/* single service part detalis End */}
       <div>
-        {/* review part detalis */}
-        <div>
+        {/* review part start */}
+         <div>
           {reviewData.map((rv) => (
             <div
-              className=" shadow-xl my-4 mx-auto px-3 py-5 border lg:w-6/12 rounded"
+              className=" shadow-xl my-4 mx-auto px-3 py-5 border  rounded"
               key={rv._id}
             >
               <div className="flex items-center">
@@ -139,17 +145,32 @@ console.log(reviewData)
                     </>
                   )}
                 </div>
-                <div className="mt-5 ml-3">
-                  <h2>{rv.userName}</h2>
-                  <h3>{rv.userEmail}</h3>
-                  <h4>{rv.servicesName}</h4>
-                  <h3>{rv.review}</h3>
+                <div>
+                <h2 className="ml-5  text-xl">{rv.userName}</h2>
+                <p className="ml-5 flex items-center mr-3 text-xl">
+                Rating {ratings}
+                <span className="ml-1  text-orange-400">
+                  <FaStar></FaStar>
+                </span>
+                <span className="ml-1  text-orange-400">
+                  <FaStar></FaStar>
+                </span>
+                <span className="ml-1  text-orange-400">
+                  <FaStar></FaStar>
+                </span>
+                <span className="ml-2  text-orange-400">
+                  <FaStar></FaStar>
+                </span>
+              </p>
+                <h3 className="ml-5  text-xl">{rv.review}</h3>
+                 
+
                 </div>
               </div>
             </div>
           ))}
-        </div>
-        {/* review part start */}
+         </div>
+        {/* review part End */}
 
         <form
           onSubmit={handleReview}
@@ -157,35 +178,32 @@ console.log(reviewData)
         >
           <h2 className="text-3xl py-5">Reviews</h2>
           <div className="space-y-1 text-sm">
-            <label for="name" className="block text-xl dark:text-gray-400">
+            <label htmlFor="name" className="block text-xl dark:text-gray-400">
               Your Name*
             </label>
             <input
-              // onBlur={handleblur}
               type="text"
               name="name"
               placeholder="Your Name"
               className="w-full px-4 text-lg py-3 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
-              // required
+              required
             />
           </div>
-          <div className="space-y-1 text-sm my-3">
-            <label for="email" className="block text-xl dark:text-gray-400">
-              Your Email *
+          <div className="space-y-1 text-sm">
+            <label htmlFor="email" className="block text-xl dark:text-gray-400">
+              Your Email*
             </label>
             <input
-              // onBlur={handleblur}
               type="email"
               name="email"
               placeholder="Enter Your Email"
               className="w-full px-4 text-lg py-3 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
-              // required
+              required
             />
           </div>
-
           <div className="space-y-1 text-sm">
             <label
-              for="rating"
+              htmlFor="rating"
               className="flex text-xl py-5 dark:text-gray-400"
             >
               Your rating *
@@ -209,7 +227,7 @@ console.log(reviewData)
             </label>
           </div>
           <div className="space-y-1 text-sm">
-            <label for="email" className="block text-xl dark:text-gray-400">
+            <label htmlFor="email" className="block text-xl dark:text-gray-400">
               Your review *
             </label>
             <textarea
@@ -227,8 +245,7 @@ console.log(reviewData)
           </button>
         </form>
       </div>
-      <div>
-      </div>
+      <div></div>
     </div>
   );
 };
