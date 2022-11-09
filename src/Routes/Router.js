@@ -1,3 +1,4 @@
+import AddService from "../Components/Page/AddService/AddService";
 import Blog from "../Components/Page/Blog/Blog";
 import Home from "../Components/Page/Home/Home";
 import Login from "../Components/Page/Login/Login";
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       },{
         path:'/blog',
         element:<Blog></Blog>
+      },
+      {
+        path:'/addservice',
+        element:<AddService></AddService>
       }
     ]
   },

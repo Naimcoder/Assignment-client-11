@@ -5,11 +5,9 @@ import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../../Context/UseContext";
 
 const ServicesDetails = () => {
-  const [review, setReview] = useState({});
   const [reviewData, setReviewData] = useState([]);
   const { user } = useContext(AuthContext);
   const users = useLoaderData();
-  console.log(review);
   const { name, img, price, ratings, delivery, description } = users;
 
 
