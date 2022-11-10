@@ -50,16 +50,6 @@ const MyReview = () => {
           }
           
 
-{/* {  allreview.length >1 ?<div className=" min-h-screen"><p className='text-teal-300  text-center col-span-3 text-5xl md:text-6xl lg:text-8xl'>NO REVIEW ARE ADDED</p></div>:<>
-              {allreview.map((review) => (
-              <ReviewRow
-                key={review._id}
-                allreview={review}
-                handleDeleted={handaleDelete}
-              ></ReviewRow>
-            ))}
-              </>
-            } */}
 
           </tbody>
         </table>

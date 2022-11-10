@@ -156,6 +156,7 @@ const ServicesDetails = () => {
                     </span>
                   </p>
                   <h3 className="ml-5  text-xl">{rv.review}</h3>
+                  <h3 className="ml-5  text-xl">{rv.time}</h3>
                 </div>
               </div>
             </div>
