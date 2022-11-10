@@ -5,8 +5,10 @@ import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { auth, AuthContext } from "../../../Context/UseContext";
 import login from "../../../Images/38435-register.gif";
+import UseTitle from "../../Shares/UseTitle/UseTitle";
 
 const Register = () => {
+  UseTitle('Register')
   const {createUser,updateprofile}= useContext(AuthContext)
   const githubProvider= new GithubAuthProvider()
   const googleProvider= new GoogleAuthProvider()

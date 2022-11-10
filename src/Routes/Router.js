@@ -3,11 +3,12 @@ import Blog from "../Components/Page/Blog/Blog";
 import Home from "../Components/Page/Home/Home";
 import Login from "../Components/Page/Login/Login";
 import MyReview from "../Components/Page/MyReview/MyReview";
+import Update from "../Components/Page/MyReview/Update";
 import Register from "../Components/Page/Register/Register";
 import ServicesAll from "../Components/Page/ServicesAll/ServicesAll";
 import ServicesDetails from "../Components/Page/ServicesDetails/ServicesDetails";
-import PrivateRouter from "./PrivateRouter";
 import Root from "../Layout/Root";
+import PrivateRouter from "./PrivateRouter";
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -25,7 +26,7 @@ export const router = createBrowserRouter([
       {
         path:'/services',
         element:<ServicesAll></ServicesAll>,
-        loader:()=>fetch('http://localhost:5000/servicesAll')
+        loader:()=>fetch('https://assignment-review-server-one.vercel.app/servicesAll')
       },
       {
         path:'/login',
@@ -37,7 +38,7 @@ export const router = createBrowserRouter([
       },{
         path:'services/:id',
         element:<PrivateRouter><ServicesDetails></ServicesDetails></PrivateRouter>,
-        loader:({params})=>fetch(`http://localhost:5000/services/${params.id}`)
+        loader:({params})=>fetch(`https://assignment-review-server-one.vercel.app/services/${params.id}`)
       },{
         path:'/blog',
         element:<Blog></Blog>
@@ -49,6 +50,11 @@ export const router = createBrowserRouter([
       {
         path:'/reviews',
         element:<PrivateRouter><MyReview></MyReview></PrivateRouter>
+      },
+      {
+        path:'/update/:id',
+        element:<Update></Update>,
+        loader:({params})=>fetch(`https://assignment-review-server-one.vercel.app/reviews/${params.id}`)
       }
     ]
   },

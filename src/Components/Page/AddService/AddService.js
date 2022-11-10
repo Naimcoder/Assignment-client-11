@@ -1,49 +1,53 @@
 import React from "react";
-// name, img, price, ratings, delivery, description 
-
+import UseTitle from "../../Shares/UseTitle/UseTitle";
+// name, img, price, ratings, delivery, description
 
 const AddService = () => {
-    const handleAddService=(event)=>{
-          event.preventDefault();
+  UseTitle('Add Services')
+  const handleAddService = (event) => {
+    event.preventDefault();
 
-        const name= event.target.name.value;
-        const img= event.target.img.value;
-        const price= event.target.price.value;
-        const ratings= event.target.ratings.value;
-        const delivery= event.target.delivery.value;
-        const description=event.target.description.value;
-        console.log( name,
-            img,
-            price,
-            ratings,
-            delivery,
-            description)
+    const name = event.target.name.value;
+    const img = event.target.img.value;
+    const price = event.target.price.value;
+    const ratings = event.target.ratings.value;
+    const delivery = event.target.delivery.value;
+    const description = event.target.description.value;
+    console.log(name, img, price, ratings, delivery, description);
 
-          fetch('http://localhost:5000/services',{
-            method:"POST",
-            headers:{
-                "content-type":"application/json",
-            },
-            body: JSON.stringify({
-            name,
-            img,
-            price,
-            ratings,
-            delivery,
-            description
-            })
-          })
-          .then(res=>res.json())
-          .then(data=>{
-            console.log(data)
-          })
-    }
+
+    fetch("https://assignment-review-server-one.vercel.app/services", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        img,
+        price,
+        ratings,
+        delivery,
+        description,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
   return (
     <div className="my-30">
-      <form onSubmit={handleAddService} className="  bg-slate-300 my-10 lg:w-2/3 mx-auto p-10">
+      <form
+        onSubmit={handleAddService}
+        className="  bg-slate-300 my-10 lg:w-2/3 mx-auto p-10"
+      >
         <h2 className="text-3xl py-5">Add Service</h2>
         <div className="space-y-1 text-sm py-3">
-          <label html   htmlFor="serviceName" className="block text-xl dark:text-gray-400">
+          <label
+            html
+            htmlFor="serviceName"
+            className="block text-xl dark:text-gray-400"
+          >
             Your Product Name*
           </label>
           <input
@@ -76,8 +80,11 @@ const AddService = () => {
           />
         </div>
         <div className="space-y-1 text-sm">
-          <label htmlFor="delivery" className="block text-xl dark:text-gray-400">
-         Service Delivery Time*
+          <label
+            htmlFor="delivery"
+            className="block text-xl dark:text-gray-400"
+          >
+            Service Delivery Time*
           </label>
           <input
             type="text"
@@ -98,7 +105,10 @@ const AddService = () => {
           />
         </div>
         <div className="space-y-1 text-sm">
-          <label htmlFor="description" className="block text-xl dark:text-gray-400">
+          <label
+            htmlFor="description"
+            className="block text-xl dark:text-gray-400"
+          >
             Your Description Service*
           </label>
           <textarea

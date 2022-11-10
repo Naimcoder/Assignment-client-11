@@ -192,7 +192,16 @@ const Header = () => {
                           Blog
                         </Link>
                       </li>
-
+                      <li>
+                            <Link
+                              to="/services"
+                              aria-label="About us"
+                              title="About us"
+                              class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
+                            >
+                            My Services
+                            </Link>
+                          </li>
                       {user?.email ? (
                         <>
                           <li>
@@ -245,16 +254,6 @@ const Header = () => {
                           </li>
                         </>
                       )}
-                       <li>
-                            <Link
-                              to="/services"
-                              aria-label="About us"
-                              title="About us"
-                              class="font-medium tracking-wide text-black transition-colors duration-200 hover:text-teal-accent-400"
-                            >
-                            My Services
-                            </Link>
-                          </li>
                       {user?.email ? (
                         <>
                           <img

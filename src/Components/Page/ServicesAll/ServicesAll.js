@@ -2,8 +2,11 @@ import React from "react";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import 'react-photo-view/dist/react-photo-view.css';
 import { Link, useLoaderData } from "react-router-dom";
+import UseTitle from "../../Shares/UseTitle/UseTitle";
+
 
 const ServicesAll = () => {
+  UseTitle('My Services')
   const user = useLoaderData();
   return (
     <div className="">

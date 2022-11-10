@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Context/UseContext";
 
 const ReviewRow = ({allreview,handleDeleted}) => {
@@ -30,7 +31,9 @@ const ReviewRow = ({allreview,handleDeleted}) => {
           <button onClick={()=>handleDeleted(_id)} className="btn btn-xs bg-blue-600 text-white">DELETE</button>
         </th>
         <th>
+          <Link to={`/update/${_id}`}>
           <button  className="btn btn-xs bg-blue-600 text-white">UPDATE</button>
+          </Link>
         </th>
       </tr>
     </div>

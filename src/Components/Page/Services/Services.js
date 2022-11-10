@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import 'react-photo-view/dist/react-photo-view.css';
 import { Link } from "react-router-dom";
+import UseTitle from "../../Shares/UseTitle/UseTitle";
 
 const Services = () => {
+  UseTitle('Services')
   const [service, setServices] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/services")
+    fetch("https://assignment-review-server-one.vercel.app/services")
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, []);
   return (
     <div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3  sm:mx-auto l px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl  lg:px-8 lg:py-20">
+      {/* <h1 className="text-center text-5xl py-8 text-amber-400">MY SERVICRS</h1> */}
         {service.map((services) => (
           <div key={services._id}>
             <div className="">

@@ -7,9 +7,10 @@ import {
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { auth, AuthContext } from "../../../Context/UseContext";
 import login from "../../../Images/38435-register.gif";
+import UseTitle from "../../Shares/UseTitle/UseTitle";
 const Login = () => {
   const [userEmail, setUserEmail] = useState("");
   const { signIn } = useContext(AuthContext);
@@ -19,7 +20,7 @@ const Login = () => {
   const loaction= useLocation()
 
 
-
+ UseTitle('Login')
 const froms= loaction.state?.from?.pathname || '/';
 
 

@@ -1,21 +1,19 @@
-import { fromJSON } from "postcss";
 import React, { useContext, useEffect, useState } from "react";
 import { FaBicycle, FaStar, FaUser } from "react-icons/fa";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../../Context/UseContext";
+import UseTitle from "../../Shares/UseTitle/UseTitle";
 
 const ServicesDetails = () => {
+  UseTitle('Services Detalis')
   const [reviewData, setReviewData] = useState([]);
   const { user } = useContext(AuthContext);
   const users = useLoaderData();
   const { name, img, price, ratings, delivery, description } = users;
   const time = new Date().toDateString();
 
-
-
-  
   const handleReview = (event) => {
     event.preventDefault();
 
@@ -25,9 +23,7 @@ const ServicesDetails = () => {
     const userName = event.target.name.value;
     const review = event.target.message.value;
 
-
-
-    fetch("http://localhost:5000/reviews", {
+    fetch("https://assignment-review-server-one.vercel.app/reviews", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -47,10 +43,8 @@ const ServicesDetails = () => {
       });
   };
 
-
-
   useEffect(() => {
-    fetch(`http://localhost:5000/reviews`)
+    fetch(`https://assignment-review-server-one.vercel.app/reviews`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -59,8 +53,7 @@ const ServicesDetails = () => {
         });
         setReviewData(agreeData);
       });
-  }, [users._id,reviewData]);
- 
+  }, [users._id, reviewData]);
 
   return (
     <div>
@@ -118,10 +111,10 @@ const ServicesDetails = () => {
           </button>
         </div>
       </div>
-       {/* single service part detalis End */}
+      {/* single service part detalis End */}
       <div>
         {/* review part start */}
-         <div>
+        <div className="w-6/12 mx-auto">
           {reviewData.map((rv) => (
             <div
               className=" shadow-xl my-4 mx-auto px-3 py-5 border  rounded"
@@ -146,30 +139,28 @@ const ServicesDetails = () => {
                   )}
                 </div>
                 <div>
-                <h2 className="ml-5  text-xl">{rv.userName}</h2>
-                <p className="ml-5 flex items-center mr-3 text-xl">
-                Rating {ratings}
-                <span className="ml-1  text-orange-400">
-                  <FaStar></FaStar>
-                </span>
-                <span className="ml-1  text-orange-400">
-                  <FaStar></FaStar>
-                </span>
-                <span className="ml-1  text-orange-400">
-                  <FaStar></FaStar>
-                </span>
-                <span className="ml-2  text-orange-400">
-                  <FaStar></FaStar>
-                </span>
-              </p>
-                <h3 className="ml-5  text-xl">{rv.review}</h3>
-                 
-
+                  <h2 className="ml-5  text-xl">{rv.userName}</h2>
+                  <p className="ml-5 flex items-center mr-3 text-xl">
+                    Rating {ratings}
+                    <span className="ml-1  text-orange-400">
+                      <FaStar></FaStar>
+                    </span>
+                    <span className="ml-1  text-orange-400">
+                      <FaStar></FaStar>
+                    </span>
+                    <span className="ml-1  text-orange-400">
+                      <FaStar></FaStar>
+                    </span>
+                    <span className="ml-2  text-orange-400">
+                      <FaStar></FaStar>
+                    </span>
+                  </p>
+                  <h3 className="ml-5  text-xl">{rv.review}</h3>
                 </div>
               </div>
             </div>
           ))}
-         </div>
+        </div>
         {/* review part End */}
 
         <form
