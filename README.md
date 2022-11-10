@@ -18,10 +18,9 @@ WebSite Courses![plot](././src/Images/Home.png)
 
 
 ### what is the learn of website?
-> * website A poroper check can check how much the students are learning
-> * About programming language can be learned porpely
-> * The specific programming can take ideas about language
-> * Besides,which programming language is used for what purpose is mentioned
+> * website A poroper service Home delivery
+> * About delivery service  and online delivery
+> * The specific  online Food delivery services
 
 | # setup:
 
