@@ -7,7 +7,7 @@ const PrivateRouter = ({children}) => {
 
     const location= useLocation()
     if (loader) {
-     return <h2>Loading....</h2>
+     return <div className=' my-20 mx-auto'><progress className="progress w-56"></progress></div>
     }
     
     if (user) {

@@ -8,16 +8,14 @@ import ReviewRow from "./ReviewRow";
 const MyReview = () => {
   UseTitle('My Review')
   const [allreview, setReview] = useState([]);
-  const {user}=useContext(AuthContext)
   useEffect(() => {
-    fetch(`https://assignment-review-server-one.vercel.app/myreviews?email=${user?.email}`)
+    fetch(`https://assignment-review-server-one.vercel.app/reviews`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setReview(data);
-          console.log(allreview)
       });
-  }, [user?.email])
+  },[])
  
 
 
@@ -47,11 +45,12 @@ const MyReview = () => {
         <table className="table w-full">
           <tbody>
           {
+
             allreview.map(rv=><ReviewRow key={rv._id}allreview={rv} handleDeleted={handaleDelete}></ReviewRow>)
           }
+          
 
-{/* {
-              allreview.length >1 ?<div className=" min-h-screen"><p className='text-teal-300  text-center col-span-3 text-5xl md:text-6xl lg:text-8xl'>NO REVIEW ARE ADDED</p></div>: <>
+{/* {  allreview.length >1 ?<div className=" min-h-screen"><p className='text-teal-300  text-center col-span-3 text-5xl md:text-6xl lg:text-8xl'>NO REVIEW ARE ADDED</p></div>:<>
               {allreview.map((review) => (
               <ReviewRow
                 key={review._id}
